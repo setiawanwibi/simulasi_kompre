@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_kendaraan')->constrained('kendaraans')->onDelete('cascade');
-            $table->foreignId('id_jenis_bbm')->constrained('jenis_bbms')->onDelete('cascade');
+            $table->foreignId('id_jenis_bbm')->constrained('jenisbbms')->onDelete('cascade');
             $table->date('tanggal_permohonan');
-            $table->integer('jumlah_liter');
+            $table->decimal('jumlah_liter', 10, 2);
             $table->string('foto_sisa_bbm');
             $table->integer('odometer');
             $table->integer('odometer_sebelumnya');

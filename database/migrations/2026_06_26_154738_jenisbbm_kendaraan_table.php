@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kendaraans', function (Blueprint $table) {
+        Schema::create('jenisbbm_kendaraan', function (Blueprint $table) {
             $table->id();
-            $table->string('no_polisi')->unique();
-            $table->string('merk');
-            $table->string('jenis');
-            $table->integer('tahun');
-            $table->integer('odometer_terakhir')->default(0);
+            $table->foreignId('jenisbbm_id')->constrained('jenisbbms')->onDelete('cascade');
+            $table->foreignId('kendaraan_id')->constrained('kendaraans')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kendaraans');
+        //
     }
 };

@@ -13,21 +13,22 @@ return new class extends Migration
     {
         Schema::create('laporan_bbms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_admin');
-            $table->unsignedBigInteger('id_driver');
-            $table->unsignedBigInteger('id_kendaraan');
+            $table->foreignId('id_permohonan')->constrained('permohonan_bbms')->onDelete('cascade');
+            $table->foreignId('id_admin')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('id_driver')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('id_kendaraan')->constrained('kendaraans')->onDelete('cascade');
             $table->string('no_polisi');
-            $table->unsignedBigInteger('id_jenis_bbm');
+            $table->foreignId('id_jenis_bbm')->constrained('jenisbbms')->onDelete('cascade');
             $table->date('tanggal');
             $table->decimal('jumlah_liter', 10, 2);
             $table->decimal('harga_per_liter', 10, 2);
-            $table->decimal('total_biaya', 10, 2);
+            $table->decimal('total_biaya', 15, 2);
             $table->text('keterangan_admin')->nullable();
             $table->text('catatan_driver')->nullable();
             $table->string('foto_driver')->nullable();
             $table->integer('odometer');
-            $table->string('nama_driver');
-            $table->string('nama_admin');
+            $table->string('nama_driver')->nullable();
+            $table->string('nama_admin')->nullable();
             $table->string('nama_jenis_bbm');
             $table->timestamps();
         });
