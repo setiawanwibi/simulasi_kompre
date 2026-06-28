@@ -13,24 +13,27 @@ return new class extends Migration
     {
         Schema::create('permohonan_bbms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_kendaraan')->constrained('kendaraans')->onDelete('cascade');
-            $table->foreignId('id_jenis_bbm')->constrained('jenisbbms')->onDelete('cascade');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_kendaraan');
+            $table->unsignedBigInteger('id_jenis_bbm');
             $table->date('tanggal_permohonan');
-            $table->decimal('jumlah_liter', 10, 2);
+            $table->decimal('jumlah_liter', 8, 2);
             $table->string('foto_sisa_bbm');
             $table->integer('odometer');
             $table->integer('odometer_sebelumnya');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default;
             $table->text('keterangan_admin')->nullable();
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
+
     public function down(): void
     {
         Schema::dropIfExists('permohonan_bbms');
     }
 };
+

@@ -11,5 +11,6 @@ for ($i = 0; $i < $n - 1; $i++){
 	$data[$j+1] = $temp;
 }
 }
+
 print_r($data);
 }

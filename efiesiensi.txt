@@ -1,1 +1,72 @@
-efiensi testing
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->string('password');
+            $table->enum('role', ['super_admin', 'admin', 'driver']);
+            $table->timestamps();
+        });
+
+        Schema::create('kendaraans', function (Blueprint $table) {
+            $table->id();
+            $table->string('no_polisi');
+            $table->string('merk');
+            $table->string('jenis');
+            $table->integer('tahun');
+            $table->integer('odometer_terakhir');
+            $table->timestamps();
+        });
+    
+
+            Schema::create('jenis_bbms', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_jenis');
+            $table->decimal('harga_per_liter', 10, 2);
+            $table->timestamps();
+        });
+
+            Schema::create('jenisbbm_kendaraans', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('jenisbbm_id')->constrained('jenis_bbms')->onDelete('cascade');
+            $table->foreignId('kendaraan_id')->constrained('kendaraans')->onDelete('cascade');
+            $table->foreignId('jenisbbms_id')->constrained('jenisbbms')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+            Schema::create('permohonan_bbms', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_kendaraan');
+            $table->unsignedBigInteger('id_jenis_bbm');
+            $table->date('tanggal_permohonan');
+            $table->decimal('jumlah_liter',8,2);
+            $table->string('foto_sisa_bbm');
+            $table->integer('odometer');
+            $table->integer('odometer_sebelumnya');
+            $table->enum('status',['pending','approve','reject'])->default;
+            $table->text('keterangan_admin')->nullable;
+            $table->timestamps();
+        });
+
+            Schema::create('laporan_bbms', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_permohonan')->nullable;
+            $table->unsignedBigInteger('id_admin');
+            $table->unsignedBigInteger('id_driver');
+            $table->unsignedBigInteger('id_kendaraan');
+            $table->string('no_polisi');
+            $table->unsignedBigInteger('id_jenis_bbm');
+            $table->date('tangggal');
+            $table->decimal('jumlah_liter', 8, 2);
+            $table->decimal('harga_per_liter', 10, 2);
+            $table->integer('total_biaya');
+            $table->text('keterangan_admin')->nullable;
+            $table->text('catatan_driver')->nullable;
+            $table->string('foto_driver');->nullable;
+            $table->integer('odometer');
+            $table->string('nama_driver');
+            $table->string('nama_admin');
+            $table->string('nama_jenis_bbm');
+            $table->timestamps();
+            $table->unsignedBigInteger('id_admin');
+        });

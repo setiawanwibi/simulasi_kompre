@@ -11,18 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenisbbm_kendaraan', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jenisbbm_id')->constrained('jenisbbms')->onDelete('cascade');
-            $table->foreignId('kendaraan_id')->constrained('kendaraans')->onDelete('cascade');
+            $table->string('name');
+            $table->string('email');
+            $table->string('password');
+            $table->enum('role', ['super_admin', 'admin', 'driver']);
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('users');
     }
 };
